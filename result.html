@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Risultato JSON</title>
+  <style>body{font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;padding:20px}pre{background:#f5f5f5;padding:12px;border-radius:6px;overflow:auto} a{display:inline-block;margin-top:12px}</style>
+</head>
+<body>
+  <h1>Dati inviati (JSON)</h1>
+  <div id="content">Caricamento...</div>
+  <a href="index.html">Torna al form</a>
+  <script>
+    function getQueryParam(name){
+      const search = window.location.search.substring(1);
+      const params = new URLSearchParams(search);
+      return params.get(name);
+    }
+    const dataParam = getQueryParam('data');
+    const content = document.getElementById('content');
+    if(!dataParam){
+      content.innerHTML = '<div>Parametro "data" mancante nell\'URL.</div>';
+    } else {
+      try{
+        const obj = JSON.parse(decodeURIComponent(dataParam));
+        content.innerHTML = '<pre>' + JSON.stringify(obj, null, 2) + '</pre>';
+      }catch(err){
+        content.innerHTML = '<div>Impossibile decodificare o parsare il JSON: ' + err.message + '</div>';
+      }
+    }
+  </script>
+</body>
+</html>
